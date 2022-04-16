@@ -1,0 +1,96 @@
+//Clase curso
+// class curso {
+//     string nombreCurso;
+//     string descripcionCurso;
+//     bool isDone;
+//     tarea[] tareas;
+//     //recompensa recompensa;
+// }
+
+contrat main{
+
+    class Curso {
+        int idCurso;
+        string nombreCurso;
+        string descripcionCurso;
+        float recompensa; //recompensa+((recompensa/2)*recomensaAcumulada)
+        int cantidadTareas = 100;
+        bool isFinalizado = false; //Un curso se finaliza cuando el avance es 1
+    }
+
+    class Hijo{
+        string nombreHijo;
+        int idHijo; //id de address
+        int cantidadTareasRealizadas = 0;
+        float recompensaAcumulada = 0; 
+        float avance = 0; //cantidadDeTareasRealizadas/cantidadDeTareas = avance
+        padre padre;
+        curso[] cursosMatriculados;
+    }
+
+    class Padre{
+        string nombrePadre;
+        int idPadre; //id de address
+        touple (recompensa,Curso)[] recompensas;
+    }
+
+    mapping(address => Hijo) hijos;
+
+    Padre [] padre;
+
+    function matricularCursoEspecifico(address hijo, Curso curso, float recompensa){
+        hijo.cursosMatriculados.push(curso, recompensa);
+    }
+
+    function matricularCursos(address hijo){ //El contrato establece que debe tomar todos los cursos :v ftw
+
+            for(int i = 0; i < hijo.padre.recompensas.length; i++){
+                matricularCursoEspecifico(hijo, hijo.padre.recompensas[i][1], hijo.padre.recompensas[i][0]);          
+            }
+    }
+
+    function avanzar(addres hijo, Curso cursoAAvanzar, cantidadTareasHizo){
+        
+        if(cursoAAvanzar.isFinalizado){
+            throw;
+        }
+
+        if(cantidadTareasHizo > cursoAAvanzar.cantidadTareas){
+            throw;
+        }
+
+        cursoAAvanzar.cantidadTareasRealizadas += cantidadTareasHizo;
+        cursoAAvanzar.avance = cursoAAvanzar.cantidadTareasRealizadas/cursoAAvanzar.cantidadTareas;
+        cursoAAvanzar.isFinalizado = if(cursoAAvanzar.avance == 1);
+
+        if(cursoAAvanzar.isFinalizado){
+            cursoAAvanzar.recompensaAcumulada += cursoAAvanzar.recompensa;
+            cursoAAvanzar.padre.recompensas.push(cursoAAvanzar.recompensaAcumulada, cursoAAvanzar);
+        }
+    }
+
+
+
+// //Estas funciones sobran
+//     function cambiarEstadoCurso(){}
+
+//     function cambiarEstadoTarea(){}
+    
+//     function asignarRecompensa(){} /*de la recompensa en la tupla padre, basado en el cantidad de tareas 
+//                                     terminadas por el hijo se calcula la redcompensa final.*/
+    
+
+// }
+
+
+// class tarea{
+//     int idTarea;
+//     string nombreTarea;
+//     string descripcionTarea;
+//     bool isDone;
+// }
+
+// class recompensa{
+//     int idRecompensa;
+//     float cantidadRecompensa
+// }

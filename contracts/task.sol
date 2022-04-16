@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.4.6;
+pragma solidity ^0.8.6;
 
 contract TaskCRUD { //create, delete, update and read task on a course
 
@@ -15,9 +15,9 @@ contract TaskCRUD { //create, delete, update and read task on a course
     mapping(uint256 => Task) public tasks;
     uint256[] private taskIndex;
 
-    event LogNewUser   (uint256 indexed id, uint index, string name, string description);
-    event LogUpdateUser(uint256 indexed id, uint index, string name, string description);
-    event LogDeleteUser(uint256 indexed id, uint index);
+    event LogNewTask   (uint256 indexed id, uint index, string name, string description);
+    event LogUpdateTask(uint256 indexed id, uint index, string name, string description);
+    event LogDeleteTask(uint256 indexed id, uint index);
     event TaskisDone(uint256 indexed id, bool done);
 
     function isTask(uint256 id)
@@ -26,7 +26,7 @@ contract TaskCRUD { //create, delete, update and read task on a course
         return (taskIndex[tasks[id].index] == id);
     }
 
-    function insertTask(uint256 id, string name, string description)
+    function insertTask(uint256 id, string memory name, string memory description)
          
         public returns(uint index) {
             if(isTask(id)) require(false); 
@@ -34,7 +34,7 @@ contract TaskCRUD { //create, delete, update and read task on a course
             tasks[id].name = name;
             tasks[id].description = description;
             tasks[id].index = taskIndex.push(id)-1;
-            LogNewUser(
+            LogNewTask(
                 id, 
                 tasks[id].index, 
                 name, 
@@ -42,19 +42,18 @@ contract TaskCRUD { //create, delete, update and read task on a course
             return taskIndex.length-1;
         }
 
-    function deleteUser(uint256 id) 
+    function deleteTask(uint256 id) 
         public returns(uint index) {
             if(!isTask(id)) require(false); 
             uint rowToDelete = tasks[id].index;
             uint keyToMove = taskIndex[taskIndex.length-1];
             taskIndex[rowToDelete] = keyToMove;
             tasks[keyToMove].index = rowToDelete; 
-            taskIndex.length--;
-            LogDeleteUser(
+            taskIndex.length-1;
+            LogDeleteTask(
                 id, 
-
                 rowToDelete);
-            LogUpdateUser(
+            LogUpdateTask(
                 keyToMove, 
                 rowToDelete, 
                 tasks[keyToMove].name, 
@@ -63,7 +62,7 @@ contract TaskCRUD { //create, delete, update and read task on a course
         }
     
     function getUser(uint256 id)
-        public view returns(string name, string description, uint index) {
+        public view returns(string memory name, string memory description, uint index) {
             if(!isTask(id)) require(false); 
             return(
             tasks[id].name, 
@@ -71,12 +70,12 @@ contract TaskCRUD { //create, delete, update and read task on a course
             tasks[id].index);
         } 
     
-    function updateTask(uint256 id, string name, string description) 
+    function updateTask(uint256 id, string memory name, string memory description) 
         public returns(bool success) {
             if(!isTask(id)) require(false); 
             tasks[id].name = name;
             tasks[id].description = description;
-            LogUpdateUser(
+            LogUpdateTask(
             id, 
             tasks[id].index,
             name, 
@@ -85,12 +84,12 @@ contract TaskCRUD { //create, delete, update and read task on a course
         }
     
 
-    function getUserCount() 
+    function getTaskCount() 
         public view returns(uint count) {
             return taskIndex.length;
         }
 
-    function getUserAtIndex(uint index)
+    function getTaskAtIndex(uint index)
         public view returns(uint256 id) {
             return taskIndex[index];
         }
