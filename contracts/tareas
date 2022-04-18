@@ -1,5 +1,5 @@
 //Clase curso
-// class curso {
+// struct curso {
 //     string nombreCurso;
 //     string descripcionCurso;
 //     bool isDone;
@@ -9,7 +9,7 @@
 
 contrat main{
 
-    class Curso {
+    struct Curso {
         int idCurso;
         string nombreCurso;
         string descripcionCurso;
@@ -18,7 +18,7 @@ contrat main{
         bool isFinalizado = false; //Un curso se finaliza cuando el avance es 1
     }
 
-    class Hijo{
+    struct Hijo{
         string nombreHijo;
         int idHijo; //id de address
         int cantidadTareasRealizadas = 0;
@@ -28,7 +28,7 @@ contrat main{
         curso[] cursosMatriculados;
     }
 
-    class Padre{
+    struct Padre{
         string nombrePadre;
         int idPadre; //id de address
         touple (recompensa,Curso)[] recompensas;
@@ -83,14 +83,14 @@ contrat main{
 // }
 
 
-// class tarea{
+// struct tarea{
 //     int idTarea;
 //     string nombreTarea;
 //     string descripcionTarea;
 //     bool isDone;
 // }
 
-// class recompensa{
+// struct recompensa{
 //     int idRecompensa;
 //     float cantidadRecompensa
 // }

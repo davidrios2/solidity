@@ -1,4 +1,4 @@
-
+//Transferir ether de una cuenta a otra recibiendo arrays
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
@@ -18,7 +18,7 @@ contract ReceiveEther {
 
 contract PagarRecompensa{
     address padre;
-    address payable[] hijos;
+    address payable[] hijos; //inicializar
     uint256 [] fechaFinHijos;
     uint256 tiempoParaFinalizar;
     uint256 recompensa;
