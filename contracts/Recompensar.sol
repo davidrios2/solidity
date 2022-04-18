@@ -27,6 +27,7 @@ contract PagarRecompensa{
         tiempoParaFinalizar = _tiempoParaFinalizar; 
         esTerminadoHijo = false;
     }
+    
     //Verifica que el curso sea finalizado en los días establecidos
     function acabarCurso(uint256  _fechaFinHijo) public{
         fechaFinHijo = _fechaFinHijo;
@@ -37,8 +38,7 @@ contract PagarRecompensa{
 
     //Trasfiere el ether a la cuenta del hijo si el curso es finalizado
     function pagarRecompensa(address payable hijo) payable public{
-        if (esTerminadoHijo){
-            hijo.transfer(msg.value);
-        }
+        require (esTerminadoHijo);
+        hijo.transfer(msg.value);
     }
 }
